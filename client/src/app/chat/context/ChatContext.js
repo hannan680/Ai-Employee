@@ -79,10 +79,7 @@ export const ChatProvider = ({ children }) => {
   //     );
   //   }
   // };
-  const sanitizeResponse = (response) => {
-    // Replace potential problematic characters
-    return response.replace(/[\b\t\n\f\r\"\\]/g, "");
-  };
+
   const sendMessageToModel = (newMessage) => {
     return new Promise((resolve, reject) => {
       let streamedResponse = "";
@@ -105,15 +102,18 @@ export const ChatProvider = ({ children }) => {
         }));
 
         handlePromptDetection(response, (prompt) => {
-          setGeneratedPrompt(prompt);
-          setPromptMessageIndex(messages[activeModel].length + 1);
-          setPromptMessageIndices((prev) => [
-            ...prev,
-            messages[activeModel].length + 1,
-          ]);
+          if (prompt) {
+            setGeneratedPrompt(prompt);
+            setPromptMessageIndex(messages[activeModel].length + 1);
+            setPromptMessageIndices((prev) => [
+              ...prev,
+              messages[activeModel].length + 1,
+            ]);
+            resolve({ response, prompt });
+          } else {
+            resolve({ response, prompt: null });
+          }
         });
-
-        resolve(response);
       };
 
       const handleError = (errorMessage, model) => {
@@ -264,21 +264,16 @@ export const ChatProvider = ({ children }) => {
 // Custom hook for easy access to the context
 export const useChatContext = () => useContext(ChatContext);
 
-const handlePromptDetection = (response, setGeneratedPrompt) => {
-  // Define the markers that indicate a prompt has been built
+const handlePromptDetection = (response, callback) => {
   const promptStart = "PROMPT BUILT BY IQ BOT";
   const promptEnd = "BUILT BY IQ BOT FOR ZC EMPLOYEE";
 
-  // Check if the response contains the required prompt markers
   if (response.includes(promptStart) && response.includes(promptEnd)) {
-    // Find the indices of the start and end markers
     const startIndex = response.indexOf(promptStart) + promptStart.length;
     const endIndex = response.indexOf(promptEnd);
-
-    // Extract the prompt between the markers
     const extractedPrompt = response.substring(startIndex, endIndex).trim();
-
-    // Store the extracted prompt in the state
-    setGeneratedPrompt(extractedPrompt);
+    callback(extractedPrompt); // Use callback to pass the result
+  } else {
+    callback(null); // No prompt detected
   }
 };

@@ -39,7 +39,7 @@ export const SettingsPanel = ({
     setActiveModel(model);
   };
 
-  const handleTestClick = async() => {
+  const handleTestClick = async () => {
     if (generatedPrompt === "") {
       toast({
         title: "Prompt is not generated yet",
@@ -57,7 +57,7 @@ export const SettingsPanel = ({
           },
         ],
       };
-     await setTestMessageIndex(messages[activeModel].length);
+      await setTestMessageIndex(messages[activeModel].length);
       sendMessageToModel(testMessage);
     }
   };
@@ -106,6 +106,7 @@ export const SettingsPanel = ({
   // };
 
   const handleDeploy = async () => {
+    let prompt = generatedPrompt;
     if (generatedPrompt !== "") {
       setIsDeploying(true);
       try {
@@ -126,11 +127,17 @@ export const SettingsPanel = ({
             messages[activeModel].length,
           ]);
 
-          // Wait for the message to be sent and processed
           const updatedResponse = await sendMessageToModel(updatedPrompt);
+          console.log(updatedResponse?.prompt);
+
+          if (
+            updatedResponse?.prompt !== null &&
+            updatedResponse?.prompt !== undefined
+          ) {
+            prompt = updatedResponse.prompt;
+          }
         }
         console.log("Deploying Now......");
-        console.log(generatedPrompt);
         // Proceed with deployment
         const userData = JSON.parse(localStorage.getItem("userData"));
         if (userData && userData.activeLocation) {
@@ -139,7 +146,7 @@ export const SettingsPanel = ({
           mutate(
             {
               locationId,
-              generatedPrompt,
+              prompt,
             },
             {
               onSuccess: () => {
