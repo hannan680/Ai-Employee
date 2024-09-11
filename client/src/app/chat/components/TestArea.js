@@ -43,7 +43,7 @@ export const TestArea = () => {
       scrollView.scrollTop = scrollView.scrollHeight;
     }
   }, [messages, streamingMessage]);
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!inputValue.trim()) return;
 
@@ -52,7 +52,7 @@ export const TestArea = () => {
       content: [{ type: "text", text: inputValue }],
     };
 
-    sendMessageToModel(newMessage);
+    await sendMessageToModel(newMessage);
     setInputValue("");
   };
 
@@ -61,7 +61,7 @@ export const TestArea = () => {
     setShowRefinementModal(true);
   };
 
-  const handleRefinePrompt = (feedback) => {
+  const handleRefinePrompt =async (feedback) => {
     const refineMessagePrompt = {
       role: "user",
       content: [
@@ -76,7 +76,7 @@ export const TestArea = () => {
       ...prevIndices,
       messages[activeModel].length,
     ]);
-    sendMessageToModel(refineMessagePrompt);
+   await sendMessageToModel(refineMessagePrompt);
   };
 
   return (

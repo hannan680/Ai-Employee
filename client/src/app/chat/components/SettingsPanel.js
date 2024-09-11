@@ -39,7 +39,7 @@ export const SettingsPanel = ({
     setActiveModel(model);
   };
 
-  const handleTestClick = () => {
+  const handleTestClick = async() => {
     if (generatedPrompt === "") {
       toast({
         title: "Prompt is not generated yet",
@@ -57,7 +57,7 @@ export const SettingsPanel = ({
           },
         ],
       };
-      setTestMessageIndex(messages[activeModel].length);
+     await setTestMessageIndex(messages[activeModel].length);
       sendMessageToModel(testMessage);
     }
   };

@@ -233,8 +233,8 @@ const chatAnthropicResponse = async (req, res) => {
     // Set headers for SSE
     res.writeHead(200, {
       "Content-Type": "text/event-stream",
-      "Cache-Control": "no-cache",
       Connection: "keep-alive",
+      "Cache-Control": "no-cache",
     });
 
     const stream = await anthropic.messages.stream({

@@ -51,7 +51,7 @@ export const ChatArea = () => {
     setInputValue(e.target.value);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!inputValue.trim()) return;
 
@@ -60,17 +60,17 @@ export const ChatArea = () => {
       content: [{ type: "text", text: inputValue }],
     };
 
-    sendMessageToModel(newMessage);
+    await sendMessageToModel(newMessage);
     setInputValue("");
   };
 
-  const handleSendPredefinedPrompt = () => {
+  const handleSendPredefinedPrompt = async () => {
     const newMessage = {
       role: "user",
       content: [{ type: "text", text: "Create Prompt" }],
     };
 
-    sendMessageToModel(newMessage);
+    await sendMessageToModel(newMessage);
   };
 
   const handleDislikeResponse = (message) => {
@@ -78,7 +78,7 @@ export const ChatArea = () => {
     setShowRefinementModal(true);
   };
 
-  const handleRefinePrompt = (feedback) => {
+  const handleRefinePrompt = async (feedback) => {
     const refineMessagePrompt = {
       role: "user",
       content: [
@@ -93,7 +93,7 @@ export const ChatArea = () => {
       ...prevIndices,
       messages[activeModel].length,
     ]);
-    sendMessageToModel(refineMessagePrompt);
+    await sendMessageToModel(refineMessagePrompt);
   };
 
   const handleRegenratePrompt = () => {
