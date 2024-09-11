@@ -15,18 +15,18 @@ export default function Home() {
   if (!isLoaded) {
     return (
       <div className="h-screen w-screen flex items-center justify-center">
-        <div class="flex flex-col items-center z-5">
+        <div className="flex flex-col items-center z-5">
           <h3 className="text-4xl text-white">
             Good things take time just a few more seconds...
           </h3>
-          <div class="flex">
-            <h3 class="dot text-[200px] text-[#B6F09C] opacity-0 mx-1 relative -top-4 one leading-3">
+          <div className="flex">
+            <h3 className="dot text-[200px] text-[#B6F09C] opacity-0 mx-1 relative -top-4 one leading-3">
               .
             </h3>
-            <h3 class="dot text-[200px] text-[#B6F09C] opacity-0 mx-1 relative -top-4 two leading-3">
+            <h3 className="dot text-[200px] text-[#B6F09C] opacity-0 mx-1 relative -top-4 two leading-3">
               .
             </h3>
-            <h3 class="dot text-[200px] text-[#B6F09C] opacity-0 mx-1 relative -top-4 three leading-3">
+            <h3 className="dot text-[200px] text-[#B6F09C] opacity-0 mx-1 relative -top-4 three leading-3">
               .
             </h3>
           </div>

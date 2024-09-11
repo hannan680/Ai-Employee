@@ -60,8 +60,8 @@ export const ChatArea = () => {
       content: [{ type: "text", text: inputValue }],
     };
 
-    await sendMessageToModel(newMessage);
     setInputValue("");
+    await sendMessageToModel(newMessage);
   };
 
   const handleSendPredefinedPrompt = async () => {

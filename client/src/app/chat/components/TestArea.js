@@ -52,8 +52,8 @@ export const TestArea = () => {
       content: [{ type: "text", text: inputValue }],
     };
 
-    await sendMessageToModel(newMessage);
     setInputValue("");
+    await sendMessageToModel(newMessage);
   };
 
   const handleDislikeResponse = (message) => {
@@ -61,7 +61,7 @@ export const TestArea = () => {
     setShowRefinementModal(true);
   };
 
-  const handleRefinePrompt =async (feedback) => {
+  const handleRefinePrompt = async (feedback) => {
     const refineMessagePrompt = {
       role: "user",
       content: [
@@ -76,7 +76,7 @@ export const TestArea = () => {
       ...prevIndices,
       messages[activeModel].length,
     ]);
-   await sendMessageToModel(refineMessagePrompt);
+    await sendMessageToModel(refineMessagePrompt);
   };
 
   return (
