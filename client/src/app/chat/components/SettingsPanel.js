@@ -128,7 +128,6 @@ export const SettingsPanel = ({
           ]);
 
           const updatedResponse = await sendMessageToModel(updatedPrompt);
-          console.log(updatedResponse?.prompt);
 
           if (
             updatedResponse?.prompt !== null &&
